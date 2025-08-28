@@ -24,6 +24,7 @@ while True:
     inicio = time.time()
     tempoMaximo = 30 * 60
     dados = []
+    tempoCsv = time.strftime('%Y-%m-%d %H-%M-%S', time.localtime())
 
     while True:
         # Métricas passadas durante a execução.
@@ -47,7 +48,7 @@ while True:
         time.sleep(random.uniform(0.8, 1.2))
     
         # 1% de chance de arritmia.
-        if random.random() < 0.05:
+        if random.random() < 0.01:
             # Somando nas variáveis globais.
             totalArritmia += random.uniform(0.3, 0.5)
             qtdArritmia += 1
@@ -86,7 +87,7 @@ while True:
             print("-----------------------------------\n")
     
         df = pandas.DataFrame(dados)
-        df.to_csv(f"dados.csv", index=False, float_format="%.2f")
+        df.to_csv(f"dados-{tempoCsv}.csv", index=False, float_format="%.2f")
         
         if time.time() - inicio >= tempoMaximo:
             break
