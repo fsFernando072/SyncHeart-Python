@@ -25,6 +25,7 @@ while True:
     tempoMaximo = 30 * 60
     dados = []
     tempoCsv = time.strftime('%Y-%m-%d %H-%M-%S', time.localtime())
+    usuario = ""
 
     while True:
         # Métricas passadas durante a execução.
@@ -46,7 +47,10 @@ while True:
     
         # Simula o tempo de espera entre batimentos cardíacos reais.
         time.sleep(random.uniform(0.8, 1.2))
-    
+
+        # Coletar usuário que está com o marca-passo
+        usuario = psutil.users()[0].name
+        
         # 1% de chance de arritmia.
         if random.random() < 0.01:
             # Somando nas variáveis globais.
@@ -60,7 +64,7 @@ while True:
         
             # Print no terminal.
             print(f"-- Tempo: {tempo} Arritmia detectada! --")
-            print(f"CPU: {cpu:.1f}% \nRAM: {ram:.1f} KB \nDisco: {disco:.1f} KB")
+            print(f"CPU: {cpu:.1f}% \nRAM: {ram:.1f} KB \nDisco: {disco:.1f} KB \nUsuário: {usuario}")
             print("-----------------------------------\n")
         
             # Tempo que a execução é interrompida para simular o estímulo no coração
@@ -71,6 +75,7 @@ while True:
                 "cpu": cpu,
                 "ram": ram,
                 "disco": disco,
+                "usuario": usuario
             })
             
         else:
@@ -83,7 +88,7 @@ while True:
         
             # Print no terminal.
             print(f"\n--- Tempo: {tempo}s ---")
-            print(f"CPU: {cpu:.1f}% \nRAM: {ram:.1f} KB \nDisco: {disco:.1f} KB")
+            print(f"CPU: {cpu:.1f}% \nRAM: {ram:.1f} KB \nDisco: {disco:.1f} KB \nUsuário: {usuario}")
             print("-----------------------------------\n")
     
         df = pandas.DataFrame(dados)
