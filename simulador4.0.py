@@ -46,8 +46,8 @@ while True:
         ram = psutil.virtual_memory().percent * 0.6
     
         # Horário em que foram gerados os dados acima.
-        #tempo = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        tempo = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
+        tempo = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        # tempo = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
 
         # Porcentagem atual da bateria
         bateria = 0.0 #%
@@ -94,7 +94,7 @@ while True:
             "ram(KB)": ram,
             "disco(KB)": disco,
             "bateria(%)": bateria,
-            "qtd processos": qtdProcessos,
+            "qtd_processos": qtdProcessos,
             "usuario": usuario
         })
 
