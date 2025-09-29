@@ -103,7 +103,7 @@ while True:
             print(f"-- Tempo: {tempo} Arritmia detectada! --")
             arritmiaDetectada = False # desativando variável
         else:
-            print(f"\n--- Tempo: {tempo}s ---")
+            print(f"\n--- Tempo: {tempo} ---")
         print(f"""
 CPU: {cpu:.1f}%
 RAM: {ram:.1f} KB
