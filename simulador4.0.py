@@ -30,7 +30,6 @@ while True:
     tempoCsv = time.strftime('%Y-%m-%d %H-%M-%S', time.localtime())
     usuario = input("Escreva o código da máquina (marca-passo): ")
 
-
     while True:
         # Métricas passadas durante a execução.
         # Bateria comum de um marcapasso possui 1620J
@@ -58,15 +57,12 @@ while True:
     
         # Simula o tempo de espera entre batimentos cardíacos reais.
         time.sleep(random.uniform(0.7, 1.1))
-
-                                                                # # Coletar usuário que está com o marca-passo
-                                                                # usuario = psutil.users()[0].name
         
-    ####
+        # Coletando porcentagem da bateria
         bateria = psutil.sensors_battery()[0] # [0] indica o primeiro item retornado do comando, que é a porcentagem
+
+        # Variável de detecção de arritmia
         arritmiaDetectada = False
-
-
 
         # 1% de chance de arritmia.
         if random.random() < 0.2:
@@ -81,8 +77,7 @@ while True:
             ram += 20
         
             # Tempo que a execução é interrompida para simular o estímulo no coração
-            time.sleep(0.1)
-            
+            time.sleep(0.1) 
         else:
             # Somando nas variáveis globais
             totalMonitoramento += random.uniform(0.0625, 0.1170)
@@ -91,11 +86,6 @@ while True:
             # Alterações por conta do monitoramento.
             disco += (totalArritmia * qtdArritmia) + (totalMonitoramento * qtdMonitoramento)
         
-        
-
-
-
-
         # Adicionando os dados no dicionário.
         dados.append({
             "horario": tempo,
