@@ -1,5 +1,6 @@
 # funções relacionadas a tempo tanto do mundo real quanto do processo.
 import time
+from datetime import datetime
 
 # funções que permitem a geração de números randômicos.
 import random
@@ -9,8 +10,6 @@ import psutil
 
 # funções para manipular arquivos CSV.
 import pandas
-
-from datetime import datetime
 
 # ----- Variáveis Globais -----
 # Usadas para melhorar a qualidade das informações de disco e bateria.
@@ -64,7 +63,7 @@ while True:
         # Variável de detecção de arritmia
         arritmiaDetectada = False
 
-        # 1% de chance de arritmia.
+        # 20% de chance de arritmia.
         if random.random() < 0.2:
             arritmiaDetectada = True # ativando variavel
             # Somando nas variáveis globais.
@@ -112,6 +111,22 @@ Bateria: {bateria}%
 Qtd Processos: {qtdProcessos}
 Usuário: {usuario}
 """)
+        # Alerta de threads se RAM > 40 ---
+        if ram > 40:  
+            procs_threads = []
+            for proc in psutil.process_iter(['name']):
+                try:
+                    procs_threads.append((proc.info['name'], proc.num_threads()))
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    continue
+            
+            # ordena do maior para o menor número de threads
+            top3 = sorted(procs_threads, key=lambda x: x[1], reverse=True)[:3]
+
+            print(">> ALERTA DE RAM SOBRECARREGADA (RAM > 40%)\nTop 3 processos por número de threads:")
+            for nome, qtd in top3:
+                print(f"   {nome} - {qtd} threads")
+
         print("-----------------------------------\n")
 
         df = pandas.DataFrame(dados)
