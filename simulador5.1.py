@@ -45,8 +45,8 @@ while True:
         ram = psutil.virtual_memory().percent * 0.6
     
         # Horário em que foram gerados os dados acima.
-        tempo = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        # tempo = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
+        # tempo = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        tempo = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
 
         # Porcentagem atual da bateria
         bateria = 0.0 #%
@@ -55,7 +55,8 @@ while True:
         qtdProcessos = len(list(psutil.process_iter()))
     
         # Simula o tempo de espera entre batimentos cardíacos reais.
-        time.sleep(random.uniform(0.7, 1.1))
+        # time.sleep(random.uniform(0.7, 1.1))
+        time.sleep(9.9)
         
         # Coletando porcentagem da bateria
         bateria = psutil.sensors_battery()[0] # [0] indica o primeiro item retornado do comando, que é a porcentagem
@@ -130,7 +131,7 @@ Usuário: {usuario}
         print("-----------------------------------\n")
 
         df = pandas.DataFrame(dados)
-        df.to_csv(f"dados-{tempoCsv}.csv", index=False, float_format="%.2f")
+        df.to_csv(f"dados-{usuario}.csv", index=False, float_format="%.2f")
         
         if time.time() - inicio >= tempoMaximo:
             break
