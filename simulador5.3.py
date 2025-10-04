@@ -131,7 +131,7 @@ Usuário: {usuario}
         print("-----------------------------------\n")
 
         df = pandas.DataFrame(dados)
-        df.to_csv(f"dados-{usuario}.csv", index=False, float_format="%.2f")
+        df.to_csv(f"{usuario}.csv", index=False, float_format="%.2f")
         
         if time.time() - inicio >= tempoMaximo:
             break
