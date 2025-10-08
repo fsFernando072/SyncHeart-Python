@@ -1,7 +1,6 @@
-# ==============================================================================
-# SCRIPT DE CAPTURA DE DADOS DO MARCAPASSO - PROJETO SYNC-HEART
-# ==============================================================================
-
+# +===============================================================+
+# | SCRIPT DE CAPTURA DE DADOS DO MARCAPASSO - PROJETO SYNC-HEART |
+# +===============================================================+
 #!!!!!ALERTA!!!!! Ainda falta a lógica de geração automatica do script, especifico por dispositivo, 
 # por parte do backend (Ele deve realizar a injeção do UUID do dispositivo)
 
