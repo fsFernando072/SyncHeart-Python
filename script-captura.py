@@ -27,7 +27,7 @@ import psutil
 import pandas
 
 # #AWS Biblioteca para interagir com a AWS (comentada para a Sprint 2)
-# import boto3
+import boto3
 #endregion
 
 #region --- 2. FUNCÕES DE APOIO ---
@@ -52,7 +52,7 @@ def enviar_arquivos_pendentes_para_s3():
     # #AWS
     # Para ativar o envio real, descomente a linha 'import boto3' no inicio do arquivo
     # e as linhas marcadas como 'DESCOMENTAR PARA ATIVAR' abaixo.
-    # s3_client = boto3.client('s3') # DESCOMENTAR PARA ATIVAR
+    s3_client = boto3.client('s3') # DESCOMENTAR PARA ATIVAR
 
     try:
         arquivos_na_pasta = os.listdir(PASTA_SAIDA_CSVS)
@@ -65,8 +65,8 @@ def enviar_arquivos_pendentes_para_s3():
             try:
                 print(f"Tentando enviar o arquivo {nome_arquivo} para o S3...")
                 # #AWS
-                # s3_client.upload_file(caminho_completo, NOME_DO_BUCKET_S3, nome_arquivo) # DESCOMENTAR PARA ATIVAR O ENVIO
-                # os.remove(caminho_completo) # DESCOMENTAR PARA ATIVAR A EXCLUSAO APOS ENVIO
+                s3_client.upload_file(caminho_completo, NOME_DO_BUCKET_S3, nome_arquivo) # DESCOMENTAR PARA ATIVAR O ENVIO
+                os.remove(caminho_completo) # DESCOMENTAR PARA ATIVAR A EXCLUSAO APOS ENVIO
                 
                 print(f"SUCESSO: O arquivo {nome_arquivo} seria enviado e excluido.")
 
@@ -81,7 +81,7 @@ def enviar_arquivos_pendentes_para_s3():
 #region --- 3. CONFIGURACOES E PARAMETROS GLOBAIS ---
 
 PASTA_SAIDA_CSVS = "dados_gerados_csv/"
-# #AWS NOME_DO_BUCKET_S3 = "sync-heart-data-bucket" 
+NOME_DO_BUCKET_S3 = "INSERIR_NOME" 
 TEMPO_GERACAO_CSV_SEGUNDOS = 5 * 60
 INTERVALO_LEITURA_SEGUNDOS = 10
 UUID = receber_uuid()
@@ -189,7 +189,7 @@ while True:
         # #AWS
         # !! ATENCAO !!: A linha abaixo esta comentada para a Sprint atual.
         # Chama a função de enviar os arquivos que ainda não foram enviados
-        # enviar_arquivos_pendentes_para_s3()
+        enviar_arquivos_pendentes_para_s3()
         #endregion
     
     print("-" * 100)
