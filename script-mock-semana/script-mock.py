@@ -3,14 +3,15 @@ import random
 from datetime import datetime, timedelta
 
 # --- Configurações Globais ---
-uuid = "680fab1b-5333-4caa-970b-091a484dcf7d"
+uuid = "600d9011-c393-4113-85b1-0b1531237226"
 header = [
     "timestamp_utc", "uuid", "arritmia_detectada", "cpu_porcentagem",
-    "ram_porcentagem", "disco_uso_kb", "bateria_porcentagem",
+    "ram_porcentagem", "disco_porcentagem", "bateria_porcentagem",
     "total_tarefas_ativas", "lista_tarefas_ativas"
 ]
 tarefas_base = ["task_monitor_heartbeat", "task_data_logging"]
 tarefas_extra = ["task_pacing_control", "task_battery_management"]
+disco_atual = 42.7
 
 # --- Funções de Geração de Dados (inalteradas) ---
 def gerar_ram(linha_idx, total_linhas):
@@ -30,11 +31,19 @@ def gerar_bateria(linha_idx, bateria_inicial=100, decaimento=0.01):
     return max(round(valor, 2), 0)
 
 def gerar_linha(base_time, linha_idx, total_linhas, bateria_inicial):
+    global disco_atual
+
     timestamp = base_time.strftime("%Y-%m-%d %H:%M:%S")
     arritmia = random.choice([False] * 9 + [True])
     cpu = gerar_cpu(linha_idx, total_linhas)
     ram = gerar_ram(linha_idx, total_linhas)
-    disco = round(173578407 + random.uniform(0, 1000), 4)
+    disco_atual += random.uniform(0.0005, 0.003)
+
+    if arritmia:
+        disco_atual += random.uniform(0.01, 0.03)
+
+    disco_atual = min(disco_atual, 100)
+    disco = round(disco_atual, 3)
     bateria = gerar_bateria(linha_idx, bateria_inicial)
     
     tarefas = tarefas_base + tarefas_extra if arritmia else tarefas_base

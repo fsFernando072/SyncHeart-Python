@@ -104,7 +104,7 @@ if not os.path.exists(PASTA_SAIDA_CSVS):
 
 print(f"ID Unico do Dispositivo (UUID): {UUID}")
 
-disco_atual_kb = psutil.disk_usage('/').used / 1024
+disco_porcentagem = psutil.disk_usage('/').percent
 bateria_simulada = 99.0
 dados_para_o_proximo_csv = []
 inicio_do_ciclo_csv = time.time()
@@ -135,13 +135,11 @@ while True:
         print(f"-- {horario_atual}: Arritmia detectada! --")
         cpu_simulada = cpu_real + random.uniform(CPU_PICO_ARRITMIA, CPU_PICO_ARRITMIA + 5.0)
         ram_simulada = ram_real + random.uniform(RAM_PICO_ARRITMIA, RAM_PICO_ARRITMIA + 5.0)
-        disco_atual_kb += random.uniform(0.015, 0.040)
         tarefas_ativas_neste_ciclo.append("task_pacing_control")
     else:
         print(f"--- {horario_atual}: Monitoramento normal ---")
         cpu_simulada = cpu_real + random.uniform(-1.0, 1.0)
         ram_simulada = ram_real + random.uniform(-1.0, 1.0)
-        disco_atual_kb += random.uniform(0.00010, 0.00012)
     
     if random.random() < 0.1:
         tarefas_ativas_neste_ciclo.append("task_battery_management")
@@ -161,7 +159,7 @@ while True:
         "arritmia_detectada": arritmia_detectada,
         "cpu_porcentagem": round(cpu_final, 2),
         "ram_porcentagem": round(ram_final, 2),
-        "disco_uso_kb": round(disco_atual_kb, 4),
+        "disco_porcentagem": round(disco_porcentagem, 2),
         "bateria_porcentagem": round(bateria_final, 4),
         "total_tarefas_ativas": len(tarefas_ativas_neste_ciclo),
         "lista_tarefas_ativas": ",".join(tarefas_ativas_neste_ciclo)
